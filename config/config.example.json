@@ -1,9 +1,12 @@
 {
+  "_说明": "这是可提交到 GitHub 的配置示例。复制为 config/config.json 后再填写。不要把真实 config.json、Cookie、代理账号或 API 密钥提交到仓库。",
   "account": {
+    "_说明": "抖音浏览器与登录状态。首次运行会在 state/ 下生成 Cookie 和 Firefox 浏览器资料，请保留在服务器本地。",
     "chat_url": "https://www.douyin.com/chat",
     "storage_state": "state/douyin_storage.json",
     "cookies_file": "state/cookies.json",
     "proxy_server": "",
+    "proxy_server_说明": "家庭/住宅代理地址，例如 socks5://127.0.0.1:1080。建议使用家庭/住宅出口；普通数据中心出口可能造成抖音消息发送失败或 Cookie 很快失效。",
     "engine": "firefox",
     "driver": "playwright",
     "headless": false,
@@ -16,14 +19,25 @@
     "login_timeout_seconds": 300
   },
   "owner": {
+    "_说明": "你自己的抖音身份。建议填写，用于防止抖音偶尔把本人身份误返回为会话对方时，机器人误回复自己。",
     "douyin_id": "",
     "nickname": ""
   },
   "whitelist": {
+    "_说明": "仅列表中的启用好友会被自动回复。每人必须同时填写会话显示名、抖音号和 sec_uid；sec_uid 用 scripts/discover_friends.sh 获取。",
     "exact_match": true,
-    "friends": []
+    "friends": [
+      {
+        "_说明": "示例条目：复制此对象新增好友。enabled 为 false 时该好友不会被处理。",
+        "name": "好友在聊天列表显示的名称",
+        "douyin_id": "好友抖音号（unique_id）",
+        "sec_uid": "从 discover_friends.sh 输出复制的会话 sec_uid",
+        "enabled": false
+      }
+    ]
   },
   "ai": {
+    "_说明": "AI 服务设置。示例使用 DeepSeek 兼容接口；也可改为任何 OpenAI 兼容服务。",
     "base_url": "https://api.deepseek.com/v1",
     "api_key": "",
     "model": "deepseek-chat",
@@ -35,6 +49,7 @@
     "vision_model": ""
   },
   "reply": {
+    "_说明": "自动回复策略与频率限制。限制应按账号实际风险承受能力保持保守。",
     "enabled": true,
     "max_reply_chars": 200,
     "history_messages": 8,
@@ -54,22 +69,26 @@
     "images": {"enabled": true, "policy": "vision"}
   },
   "poll": {
+    "_说明": "轮询聊天页的间隔。不要调得过短，以免增加账号风险和资源占用。",
     "cycle_min_seconds": 15,
     "cycle_max_seconds": 35,
     "reload_every_cycles": 10,
     "startup_warmup_seconds": 5
   },
   "prompts": {
+    "_说明": "留空时程序使用内置提示词；填写后会覆盖对应的内置提示词。",
     "system_prompt": "",
     "user_template": "",
     "image_user_template": ""
   },
   "log": {
+    "_说明": "运行日志和审计 JSONL 的本地保存位置；logs/ 已被 Git 忽略。",
     "audit_file": "logs/reply_audit.jsonl",
     "runtime_file": "logs/runtime.log",
     "screenshot_dir": "logs/screenshots"
   },
   "risk": {
+    "_说明": "风控保护阈值。连续失败或检测到验证码时程序会暂停，避免持续重复操作。",
     "consecutive_failures_to_pause": 6,
     "pause_minutes_on_captcha": 30,
     "recheck_login_every_cycles": 12
