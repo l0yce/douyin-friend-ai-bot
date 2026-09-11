@@ -1,0 +1,22 @@
+# Private runtime configuration and credentials
+config/config.json
+state/
+logs/
+
+# Local runtimes and browser downloads
+.venv/
+ms-playwright/
+
+# Python build/cache files
+__pycache__/
+*.py[cod]
+*.orig
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Local environment files
+.env
+.env.*

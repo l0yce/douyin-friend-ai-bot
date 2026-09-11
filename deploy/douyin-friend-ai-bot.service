@@ -1,0 +1,28 @@
+# 抖音白名单好友 AI 自动回复机器人 —— systemd 服务示例
+# 安装：sudo cp deploy/douyin-friend-ai-bot.service /etc/systemd/system/
+#       sudo systemctl daemon-reload
+#       sudo systemctl enable --now douyin-friend-ai-bot
+# 查看日志：sudo journalctl -u douyin-friend-ai-bot -f
+# 说明：默认按本机实际目录 /www/wwwroot/douyin-friend-ai-bot 编写，
+#       虚拟环境 .venv 和浏览器 ms-playwright 都在这个目录里。
+#       如果你的项目在别的目录，把下面三行路径改掉即可。
+
+[Unit]
+Description=Douyin whitelist friend AI auto-reply bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/www/wwwroot/douyin-friend-ai-bot
+ExecStart=/www/wwwroot/douyin-friend-ai-bot/.venv/bin/python src/main.py --config config/config.json
+Restart=on-failure
+RestartSec=30
+Environment=PLAYWRIGHT_BROWSERS_PATH=/www/wwwroot/douyin-friend-ai-bot/ms-playwright
+
+# 可选：用普通用户运行更安全（先 sudo useradd -r -m douyinbot）
+# User=douyinbot
+# Group=douyinbot
+
+[Install]
+WantedBy=multi-user.target
